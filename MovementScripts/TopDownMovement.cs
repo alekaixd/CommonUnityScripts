@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class TopDownMovement : MonoBehaviour
+using UnityEngine.InputSystem;
+public class Movement : MonoBehaviour
 {
-    public float moveSpeed = 1.0f;
+    public float speed = 7.0f;
+    private Vector2 movementInput;
+    private Vector2 smoothedMovementInput;
+    private Vector2 movementInputSmoothVelocity;
+
     public new Rigidbody2D rigidbody;
-    public Vector2 movement;
     public Animator animator;
     // Start is called before the first frame update
     void Start()
@@ -14,19 +17,15 @@ public class TopDownMovement : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    
-    // Update is called once per frame
-    void Update()
-    {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        animator.SetFloat("movement.x", movement.x);
-        animator.SetFloat("movement.y", movement.y);
-    }
-
     private void FixedUpdate()
     {
-        rigidbody.MovePosition(rigidbody.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        smoothedMovementInput = Vector2.SmoothDamp(smoothedMovementInput, movementInput, ref movementInputSmoothVelocity, 0.1f);
+        rigidbody.velocity = smoothedMovementInput * speed;
+    }
+
+    private void OnMove(InputValue inputValue)
+    {
+        movementInput = inputValue.Get<Vector2>();
     }
 }
 
