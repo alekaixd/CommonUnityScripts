@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class Movement : MonoBehaviour
+public class TopDownMovement : MonoBehaviour
 {
     public float speed = 7.0f;
     private Vector2 movementInput;
