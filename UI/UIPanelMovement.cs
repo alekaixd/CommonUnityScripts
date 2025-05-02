@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// </summary>
 
 
-public class MoveScript : MonoBehaviour
+public class UIPanelMovement : MonoBehaviour
 {
     public Vector2 DestinationPos, DefaultPos;
     public bool MovingToDestination, MovingToStart, ShouldScale;
